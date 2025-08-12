@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Custom Ignores
+# Ignore sensitive local configuration files for local development
+/src/main/resources/application-local.properties
