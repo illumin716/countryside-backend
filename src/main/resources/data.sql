@@ -77,3 +77,73 @@ VALUES ('대전 오!월드', '동물원, 놀이공원, 식물원이 결합된 �
         '테마파크/동물원/놀이공원', '대전 중구 사정공원로 70',
         36.287499244271, 127.398503895122, 'https://buly.kr/44yAN94',
         4.45, 17162, '동물원,놀이공원,식물원,가족,테마파크,체험', '09:30-18:00');
+
+-- 서울특별시 명소들
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('경복궁', '조선의 대표 궁궐', '역사/문화', '서울 종로구 사직로 161', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('남산타워', '서울 중심의 명소', '전망대/문화', '서울 중구 남산동', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- 부산광역시 명소들
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('해운대해수욕장', '부산을 대표하는 해수욕장', '해변/관광', '부산 해운대로 264', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('광안리해수욕장', '부산의 유명 해수욕장', '해변/관광', '부산 수영구 광안해변로 219', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- 제주특별자치도 명소들
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('한라산', '한반도의 최고봉', '자연/산', '제주특별자치도 제주시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('성산일출봉', '제주의 대표 명소', '자연/산', '제주특별자치도 서귀포시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- 기타 지역 주요 명소들도 같은 방식으로 작성
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('김천 문화원', NULL, NULL, '경상북도 김천시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('금오산', NULL, NULL, '경상북도 구미시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('청주 무심천', NULL, NULL, '충청북도 청주시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('공주 공산성', NULL, NULL, '충청남도 공주시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('무등산', NULL, NULL, '광주광역시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('설악산', NULL, NULL, '강원도', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('송도 센트럴파크', NULL, NULL, '인천광역시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('세종호수공원', NULL, NULL, '세종특별자치시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('팔공산', NULL, NULL, '대구광역시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('태화강 국가정원', NULL, NULL, '울산광역시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('수원 화성', NULL, NULL, '경기도 수원시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('판교 테크노밸리', NULL, NULL, '경기도 성남시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('일산 호수공원', NULL, NULL, '경기도 고양시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('동탄 센트럴파크', NULL, NULL, '경기도 화성시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('동탄 롯데아울렛', NULL, NULL, '경기도 화성시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
+VALUES ('동탄 호수공원', NULL, NULL, '경기도 화성시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
