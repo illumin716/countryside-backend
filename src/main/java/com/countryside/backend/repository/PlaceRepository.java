@@ -8,20 +8,14 @@ import java.util.List;
 
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, Long> {
-    // JpaRepository에서 save, findById, findAll 같은 기본 기능들을 제공!
+    // 기존 메서드 (PlaceController에서 사용)
+    List<Place> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrCategoryContainingIgnoreCaseOrTagsContainingIgnoreCase(
+            String nameKeyword, String descriptionKeyword, String categoryKeyword, String tagsKeyword
+    );
 
-    // 필요 시 추가
-    List<Place> findByNameContainingIgnoreCase(String name); // 이름에 특정 단어가 들어간 명소 찾기
-    List<Place> findByCategoryContainingIgnoreCase(String category); // 카테고리로 명소 찾기
-    List<Place> findByDescriptionContainingIgnoreCase(String keyword); // 설명에 특정 키워드가 들어간 명소 찾기
-    List<Place> findByTagsContainingIgnoreCase(String tag); // 태그에 특정 키워드가 들어간 명소 찾기
+    // 기존 메서드 (ChatbotService에서 '카페' 검색에 사용)
+    List<Place> findByCategoryContainingIgnoreCase(String category);
 
-    // 여러 검색 조건 조합도 가능(예: 이름 또는 설명으로 찾기)
-    List<Place> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrCategoryContainingIgnoreCaseOrTagsContainingIgnoreCase(String nameKeyword, String descKeyword, String categoryKeyword, String tagKeyword);
-
-    // Place 엔티티의 기본 CRUD 메서드가 자동으로 제공됩니다.
-
-    // TODO: 명소 이름으로 검색, 카테고리별 검색 등 필요에 따라 추가 메서드 정의
-    // 예시: List<Place> findByNameContainingIgnoreCase(String name);
-    // 예시: List<Place> findByCategory(String category);
+    // 새롭게 추가할 메서드: tags 필드에서 키워드를 포함하는 장소 검색
+    List<Place> findByTagsContainingIgnoreCase(String tagsKeyword); // <-- 이 줄을 추가합니다.
 }
