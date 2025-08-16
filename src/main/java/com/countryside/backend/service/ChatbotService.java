@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional; // Optional 임포트
+import java.util.Set;     // <-- 새로 추가할 import
+import java.util.HashSet; // <-- 새로 추가할 import
 import java.util.stream.Collectors;
 
 @Service
@@ -52,32 +54,64 @@ public class ChatbotService {
             return matchedFaq.get().getAnswer();
         }
 
-        // 2. FAQ에 매칭되는 것이 없으면, 기존의 하드코딩된 특정 키워드 로직을 확인 (유지)
-        if (lowerCaseMessage.contains("안녕") || lowerCaseMessage.contains("안녕하세요")) {
-            return "안녕하세요! 저는 지역 명소 안내 챗봇입니다. 무엇을 도와드릴까요?";
-        }
-        if (lowerCaseMessage.contains("근처 카페")) {
-            List<Place> cafes = placeRepository.findByCategoryContainingIgnoreCase("카페");
-            if (!cafes.isEmpty()) {
-                return "근처 카페를 찾아봤어요: " + cafes.stream()
-                        .map(Place::getName)
+        // 2. FAQ에 매칭되는 것이 없으면, 하드코딩된 특정 키워드 로직 확인 (여기 수정!)
+
+        // --- "근처 카페" 로직 개선 ---
+        if (lowerCaseMessage.contains("근처 카페") || lowerCaseMessage.contains("카페 추천") || lowerCaseMessage.contains("카페")) {
+            // 카테고리에서 '카페'를 포함하는 명소 검색
+            List<Place> cafesByCategory = placeRepository.findByCategoryContainingIgnoreCase("카페");
+            // 태그에서 '카페'를 포함하는 명소 검색
+            List<Place> cafesByTags = placeRepository.findByTagsContainingIgnoreCase("카페");
+
+            // 두 검색 결과 합치고 중복 제거 (Set 사용)
+            Set<Place> combinedCafes = new HashSet<>(cafesByCategory);
+            combinedCafes.addAll(cafesByTags);
+
+
+            if (!combinedCafes.isEmpty()) {
+                // 주소 정보까지 함께 반환하여 사용자에게 더 구체적인 정보를 제공
+                return "찾으시는 카페 정보가 있어요: " + combinedCafes.stream()
+                        .map(place -> place.getName() + " (" + place.getAddress() + ")")
                         .collect(Collectors.joining(", ")) + " 등이 있습니다. 더 자세한 정보가 필요하시면 명소 이름을 말씀해주세요.";
             } else {
                 return "죄송합니다, 현재 데이터에 등록된 카페 정보가 없습니다.";
             }
         }
-        if (lowerCaseMessage.contains("축제") || lowerCaseMessage.contains("오늘 진행 중인 축제")) {
-            return "죄송합니다, 현재 진행 중인 지역 축제 정보는 아직 제 데이터에 없습니다. 다른 명소에 대해 궁금한 점이 있으신가요?";
+
+        // --- "축제" 로직 개선 ---
+        if (lowerCaseMessage.contains("축제") || lowerCaseMessage.contains("오늘 진행 중인 축제") || lowerCaseMessage.contains("페스티벌")) { // 키워드 확장
+            // 카테고리에서 '축제'를 포함하는 명소 검색
+            List<Place> festivalsByCategory = placeRepository.findByCategoryContainingIgnoreCase("축제");
+            // 태그에서 '축제'를 포함하는 명소 검색
+            List<Place> festivalsByTags = placeRepository.findByTagsContainingIgnoreCase("축제");
+
+            // 두 검색 결과 합치고 중복 제거
+            Set<Place> combinedFestivals = new HashSet<>(festivalsByCategory);
+            combinedFestivals.addAll(festivalsByTags);
+
+            if (!combinedFestivals.isEmpty()) {
+                // 축제 관련 명소 정보를 주소와 함께 반환
+                return "현재 진행 중인 또는 예정된 축제 관련 명소 정보입니다: " + combinedFestivals.stream()
+                        .map(place -> place.getName() + " (" + place.getAddress() + ")")
+                        .collect(Collectors.joining(", ")) + " 등이 있습니다. 자세한 내용은 해당 명소의 설명을 확인해주세요.";
+            } else {
+                return "죄송합니다, 현재 데이터에 등록된 축제 정보가 없습니다.";
+            }
         }
 
-        // 1. 사용자 질문에서 명소 관련 키워드를 찾기
+        // --- 기존 "안녕" 로직은 이제 FaqService를 통해 DB에서 관리되므로 삭제하거나 주석 처리 ---
+        // if (lowerCaseMessage.contains("안녕") || lowerCaseMessage.contains("안녕하세요")) {
+        //     return "안녕하세요! 저는 지역 명소 안내 챗봇입니다. 무엇을 도와드릴까요?";
+        // }
+
+        // 3. 사용자 질문에서 명소 관련 키워드를 찾기
         // 여기서는 간단하게 질문 전체를 키워드로 사용하거나, 특정 명소 이름을 직접 찾아보는 방식 활용
         // 추후에 더 똑똑하게 질문 분석
         List<Place> foundPlaces = placeRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrCategoryContainingIgnoreCaseOrTagsContainingIgnoreCase(
                 userMessage, userMessage, userMessage, userMessage
         );
 
-        // 2. GPT에게 전달할 프롬프트 작성
+        // 4. GPT에게 전달할 프롬프트 작성
         String prompt;
         if (!foundPlaces.isEmpty()) {
             // 명소 정보를 찾았다면 찾은 명소 정보를 깔끔하게 정리해서 프롬프트 넣기
@@ -114,7 +148,7 @@ public class ChatbotService {
         logger.debug("Loaded OpenAI API Key (masked): [{}]", (openaiApiKey != null && openaiApiKey.length() > 10 ? openaiApiKey.substring(0, 10) + "..." : "N/A"));
         // --- 디버그 라인 추가 끝 ---
 
-        // 3. GPT에게 내용 보내고 답장 받기(OpenAI API 호출)
+        // 5. GPT에게 내용 보내고 답장 받기(OpenAI API 호출)
         Map<String, Object> requestBodyMap = new HashMap<>(); // 변수명 변경 (body와 겹치지 않도록)
         requestBodyMap.put("model", model);
         requestBodyMap.put("messages", List.of(
