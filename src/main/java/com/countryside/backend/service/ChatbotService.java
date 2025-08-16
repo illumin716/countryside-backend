@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.countryside.backend.domain.Place;
 import com.countryside.backend.repository.PlaceRepository;
+import com.countryside.backend.domain.Faq; // Faq 엔티티 임포트
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity; // 추가: HttpEntity 임포트
 import org.springframework.http.HttpHeaders; // 추가: HttpHeaders 임포트
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate; // GPT와 통신할 도구
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional; // Optional 임포트
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +24,8 @@ public class ChatbotService {
 
     private final RestTemplate restTemplate; // GPT와 대화할 도구
     private final PlaceRepository placeRepository; // 데이터 저장소
+    private final FaqService faqService; // FaqService 주입!
+
 
     @Value("${openai.model.name}") // application.properties에서 GPT 모델 이름 가져오기
     private String model;
@@ -32,21 +36,28 @@ public class ChatbotService {
     @Value("${openai.api.key}") // 추가: OpenAI API 키를 주입받기 위한 필드
     private String openaiApiKey;
 
-    public ChatbotService(RestTemplate restTemplate, PlaceRepository placeRepository) {
+    public ChatbotService(RestTemplate restTemplate, PlaceRepository placeRepository, FaqService faqService) {
         this.restTemplate = restTemplate;
         this.placeRepository = placeRepository;
+        this.faqService = faqService; // 주입받은 FaqService 할당
     }
 
     public String getChatbotResponse(String userMessage) {
-        // FAQ / 퀵 버튼 처리 로직
-        // 사용자 메시지를 소문자로 변환하면 더 유연해짐
         String lowerCaseMessage = userMessage.toLowerCase();
 
+        // 1. FAQ 데이터베이스에서 매칭되는 질문이 있는지 확인
+        Optional<Faq> matchedFaq = faqService.findMatchingFaq(lowerCaseMessage);
+
+        if (matchedFaq.isPresent()) {
+            return matchedFaq.get().getAnswer();
+        }
+
+        // 2. FAQ에 매칭되는 것이 없으면, 기존의 하드코딩된 특정 키워드 로직을 확인 (유지)
         if (lowerCaseMessage.contains("안녕") || lowerCaseMessage.contains("안녕하세요")) {
             return "안녕하세요! 저는 지역 명소 안내 챗봇입니다. 무엇을 도와드릴까요?";
         }
         if (lowerCaseMessage.contains("근처 카페")) {
-            List<Place> cafes = placeRepository.findByCategoryContainingIgnoreCase("카페"); // '카페' 카테고리 명소 찾기
+            List<Place> cafes = placeRepository.findByCategoryContainingIgnoreCase("카페");
             if (!cafes.isEmpty()) {
                 return "근처 카페를 찾아봤어요: " + cafes.stream()
                         .map(Place::getName)
@@ -55,11 +66,7 @@ public class ChatbotService {
                 return "죄송합니다, 현재 데이터에 등록된 카페 정보가 없습니다.";
             }
         }
-        // TODO: '오늘 진행 중인 축제는?'과 같은 다른 FAQ도 여기에 추가하세요.
-        // 현재 Place 데이터에 축제 기간 필드가 없으므로, 초기에는 고정 메시지를 제공하거나
-        // description이나 tags에 '축제' 키워드가 있는 명소를 찾아볼 수 있습니다.
         if (lowerCaseMessage.contains("축제") || lowerCaseMessage.contains("오늘 진행 중인 축제")) {
-            // 데이터에 축제 기간 정보가 없다고 가정하고 임시 답변을 제공
             return "죄송합니다, 현재 진행 중인 지역 축제 정보는 아직 제 데이터에 없습니다. 다른 명소에 대해 궁금한 점이 있으신가요?";
         }
 
