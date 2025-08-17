@@ -147,3 +147,10 @@ VALUES ('동탄 롯데아울렛', NULL, NULL, '경기도 화성시', NULL, NULL,
 
 INSERT INTO places (name, description, category, address, latitude, longitude, image_url, average_rating, total_reviews, tags, operating_hours)
 VALUES ('동탄 호수공원', NULL, NULL, '경기도 화성시', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- EVENT 테이블에 초기 데이터 삽입
+INSERT INTO event (name, description, image_url) VALUES ('보령 머드 축제', '세계적인 해변 축제', 'https://example.com/boryeong.jpg');
+INSERT INTO event (name, description, image_url) VALUES ('강릉 커피 축제', '커피향 가득한 축제', 'https://example.com/gangneung.jpg');
+INSERT INTO event (name, description, image_url) VALUES ('담양 대나무 축제', '푸른 대나무 숲에서 즐기는 축제', 'https://example.com/damyang.jpg');
+INSERT INTO event (name, description, image_url) VALUES ('부산 국제 영화제', '아시아를 대표하는 영화 축제', 'https://example.com/busan.jpg');
+INSERT INTO event (name, description, image_url) VALUES ('안동 국제 탈춤 페스티벌', '탈춤의 흥을 느낄 수 있는 축제', 'https://example.com/andong.jpg');
