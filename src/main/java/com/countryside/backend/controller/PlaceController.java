@@ -43,7 +43,7 @@ public class PlaceController {
         }
     }
 
-    // [새롭게 추가] 세션에 저장된 지역을 기반으로 장소 목록을 조회
+    // 기존 코드 (세션 사용)
     @GetMapping("/by-location")
     public ResponseEntity<List<Place>> getPlacesByLocation(HttpSession session) {
         String location = (String) session.getAttribute("userLocation");
@@ -52,6 +52,17 @@ public class PlaceController {
             return ResponseEntity.ok(places);
         } else {
             return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    // [새롭게 추가] 특정 ID의 장소를 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePlace(@PathVariable Long id) {
+        if (placeRepository.existsById(id)) {
+            placeRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }
