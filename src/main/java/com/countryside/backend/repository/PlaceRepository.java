@@ -1,6 +1,6 @@
 package com.countryside.backend.repository;
 
-import com.countryside.backend.domain.Place; // Place 엔티티를 사용
+import com.countryside.backend.domain.Place;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +16,9 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     // 기존 메서드 (ChatbotService에서 '카페' 검색에 사용)
     List<Place> findByCategoryContainingIgnoreCase(String category);
 
-    // 새롭게 추가할 메서드: tags 필드에서 키워드를 포함하는 장소 검색
-    List<Place> findByTagsContainingIgnoreCase(String tagsKeyword); // <-- 이 줄을 추가합니다.
+    // 기존 메서드 (챗봇 답변 로직 개선에 사용)
+    List<Place> findByTagsContainingIgnoreCase(String tagsKeyword);
+
+    // [새롭게 추가] 주소에 특정 키워드가 포함된 장소 목록을 조회합니다.
+    List<Place> findByAddressContainingIgnoreCase(String addressKeyword);
 }
