@@ -154,3 +154,12 @@ INSERT INTO event (name, description, image_url) VALUES ('강릉 커피 축제',
 INSERT INTO event (name, description, image_url) VALUES ('담양 대나무 축제', '푸른 대나무 숲에서 즐기는 축제', 'https://example.com/damyang.jpg');
 INSERT INTO event (name, description, image_url) VALUES ('부산 국제 영화제', '아시아를 대표하는 영화 축제', 'https://example.com/busan.jpg');
 INSERT INTO event (name, description, image_url) VALUES ('안동 국제 탈춤 페스티벌', '탈춤의 흥을 느낄 수 있는 축제', 'https://example.com/andong.jpg');
+
+-- FAQ 데이터 (Postman으로 추가했던 내용)
+INSERT INTO faqs (id, question, answer) VALUES (11, '챗봇에게 어떻게 질문해야 하나요?', '챗봇에게 질문할 때, ''대전 맛집 알려줘'' 또는 ''서울의 야경 명소 추천해줘''와 같이 궁금한 지역과 명소 종류를 포함해서 말씀해주시면 더 정확한 정보를 얻을 수 있습니다.');
+
+INSERT INTO faqs (id, question, answer) VALUES (12, '현재 진행 중인 축제는 어디에서 볼 수 있나요?', '앱 홈 화면의 ''현재 진행 중인 축제'' 섹션에서 최근의 축제들을 확인하실 수 있습니다. 각 축제를 클릭하면 더 자세한 정보를 볼 수 있습니다.');
+
+INSERT INTO faqs (id, question, answer) VALUES (13, '특정 지역의 명소만 보고 싶어요.', '검색 기능을 이용하거나, 챗봇에게 ''대전의 공원 알려줘''와 같이 특정 지역을 언급하며 질문해주세요. 사용자의 현재 위치를 기반으로 주변 명소를 찾아볼 수도 있습니다.');
+
+INSERT INTO faqs (id, question, answer) VALUES (14, '앱 사용 중 오류가 발생했어요.', '앱 사용 중 오류가 발생한 경우, 먼저 앱을 재시작해보시고 문제가 지속되면 고객센터로 문의해주시기 바랍니다. 불편을 드려 죄송합니다.');
