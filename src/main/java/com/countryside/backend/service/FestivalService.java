@@ -30,9 +30,8 @@ public class FestivalService {
     }
 
     public List<String> getRandomCurrentFestivals() {
-        int count = 3 + random.nextInt(2); // 3 또는 4
         List<String> copy = new ArrayList<>(festivals);
         Collections.shuffle(copy, random);
-        return copy.subList(0, Math.min(count, copy.size()));
+        return copy.subList(0, 1); // 항상 1개만
     }
 }
