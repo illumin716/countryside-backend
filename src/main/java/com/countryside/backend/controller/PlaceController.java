@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/places")
 public class PlaceController {
@@ -37,7 +39,7 @@ public class PlaceController {
         String location = request.get("location");
         if (location != null) {
             session.setAttribute("userLocation", location);
-            return ResponseEntity.ok("Location set successfully to: " + location);
+            return ResponseEntity.ok(location);
         } else {
             return ResponseEntity.badRequest().body("Location data is missing.");
         }

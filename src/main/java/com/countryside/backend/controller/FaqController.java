@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/api/faqs") // 기본 경로 설정
 public class FaqController {
