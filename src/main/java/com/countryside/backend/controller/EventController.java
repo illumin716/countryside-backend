@@ -2,6 +2,7 @@ package com.countryside.backend.controller;
 
 import com.countryside.backend.domain.Event;
 import com.countryside.backend.repository.EventRepository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+@CrossOrigin(origins = "*")
 
 @RestController
 @RequestMapping("/events") // <--- 경로를 events로 변경
